@@ -1,0 +1,18 @@
+services:
+  clickhouse:
+    environment:
+      VIRTUAL_HOST_MULTIPORTS: |-
+        ${WEB_VIRTUAL_HOST}:
+          "/":
+            port: ${WEB_VIRTUAL_PORT}
+        ${API_VIRTUAL_HOST}:
+          "/":
+            port: ${API_VIRTUAL_PORT}
+      LETSENCRYPT_HOST: ${LETSENCRYPT_HOST}
+      LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL}
+    networks:
+      - step-ca-network
+
+networks:
+  step-ca-network:
+    external: true

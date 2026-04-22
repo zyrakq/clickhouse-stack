@@ -1,0 +1,29 @@
+[paths]
+environments_path = "./environments"
+extensions_dirs = ["extensions"]
+
+[build]
+extensions = ["cluster", "keeper"]
+
+[build.combos]
+"single-node" = ["cluster", "keeper"]
+
+[build.environments]
+available = ["devcontainer", "forwarding", "letsencrypt", "step-ca"]
+
+
+[build.environments.devcontainer]
+extensions = []
+combos = ["single-node"]
+
+[build.environments.forwarding]
+extensions = []
+combos = ["single-node"]
+
+[build.environments.letsencrypt]
+extensions = []
+combos = ["single-node"]
+
+[build.environments.step-ca]
+extensions = []
+combos = ["single-node"]

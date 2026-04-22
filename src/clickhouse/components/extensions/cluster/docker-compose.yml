@@ -1,0 +1,29 @@
+services:
+  clickhouse:
+    configs:
+      - source: clickhouse-cluster
+        target: ${CLICKHOUSE_CLUSTER_CONFIG:-/etc/clickhouse-server/config.d/00-cluster.xml}:ro
+    volumes:
+      - clickhouse-coordination:/var/lib/clickhouse/coordination
+
+configs:
+  clickhouse-cluster:
+    content: |
+      <clickhouse>
+        <remote_servers>
+          <${CLICKHOUSE_CLUSTER_NAME:-default}>
+            <shard>
+              <replica>
+                <host>localhost</host>
+                <port>9000</port>
+              </replica>
+            </shard>
+          </${CLICKHOUSE_CLUSTER_NAME:-default}>
+        </remote_servers>
+
+        <macros>
+          <cluster>${CLICKHOUSE_CLUSTER_NAME:-default}</cluster>
+          <shard>1</shard>
+          <replica>replica-1</replica>
+        </macros>
+      </clickhouse>

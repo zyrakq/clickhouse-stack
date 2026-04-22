@@ -1,0 +1,8 @@
+services:
+  clickhouse:
+    networks:
+      - clickhouse-workspace-network
+
+networks:
+  clickhouse-workspace-network:
+    external: true
