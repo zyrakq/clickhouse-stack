@@ -1,0 +1,8 @@
+services:
+  ch-ui:
+    networks:
+      - ch-ui-workspace-network
+
+networks:
+  ch-ui-workspace-network:
+    external: true

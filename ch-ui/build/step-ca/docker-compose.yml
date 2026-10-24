@@ -1,0 +1,33 @@
+x-logging: &default-logging
+  driver: json-file
+  options:
+    max-size: ${LOG_MAX_SIZE:-10m}
+    max-file: ${LOG_MAX_FILE:-3}
+    compress: ${LOG_COMPRESS:-true}
+services:
+  ch-ui:
+    image: ${IMAGE:-ghcr.io/caioricciuti/ch-ui:latest}
+    container_name: ch-ui
+    restart: unless-stopped
+    logging: *default-logging
+    environment:
+      CLICKHOUSE_URL: ${CLICKHOUSE_URL}
+      APP_SECRET_KEY: ${APP_SECRET_KEY}
+      APP_URL: ${APP_URL}
+      ALLOWED_ORIGINS: ${ALLOWED_ORIGINS:-*}
+      VIRTUAL_PORT: ${VIRTUAL_PORT}
+      VIRTUAL_HOST: ${VIRTUAL_HOST}
+      LETSENCRYPT_HOST: ${LETSENCRYPT_HOST}
+      LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL}
+      STEP_CA_TRUST: ${STEP_CA_TRUST:-true}
+      STEP_CA_TRUST_RESTART: ${STEP_CA_TRUST_RESTART:-true}
+    volumes:
+      - ch-ui-data:/app/data
+    networks:
+      - step-ca-network
+volumes:
+  ch-ui-data:
+    name: ch-ui-data
+networks:
+  step-ca-network:
+    external: true

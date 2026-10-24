@@ -1,0 +1,4 @@
+services:
+  ch-ui:
+    ports:
+      - 3488:3488
